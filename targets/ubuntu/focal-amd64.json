@@ -63,6 +63,19 @@
     "libpoppler-cpp-dev",
     "poppler-utils"
   ],
+  "advisoryPackages": [
+    "libpoppler97",
+    "libpoppler-dev",
+    "libpoppler-private-dev",
+    "libpoppler-glib8",
+    "libpoppler-glib-dev",
+    "gir1.2-poppler-0.18",
+    "libpoppler-qt5-1",
+    "libpoppler-qt5-dev",
+    "libpoppler-cpp0v5",
+    "libpoppler-cpp-dev",
+    "poppler-utils"
+  ],
   "patches": ["cve-2025-52885-focal"],
   "releaseAccess": {
     "policy": "public-after-checks",
