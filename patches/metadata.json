@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 3,
+  "patches": [
+    {
+      "id": "cve-2025-52885-focal",
+      "kind": "security",
+      "file": "CVE-2025-52885-focal.patch",
+      "sha256": "2488d5d4b331a37d07ca60e2c0ccc7a6e4f3272cd7052ff00d4ba4462d9e1b72",
+      "title": "Reject duplicate parent-tree keys before vector resizing",
+      "description": "Backport the upstream guard that prevents stale Parent pointers after repeated keys trigger vector reallocation.",
+      "license": "GPL-2.0-only",
+      "cves": ["CVE-2025-52885"],
+      "upstream": {
+        "repository": "https://gitlab.freedesktop.org/poppler/poppler",
+        "commit": "4ce27cc826bf90cc8dbbd8a8c87bd913cccd7ec0",
+        "url": "https://gitlab.freedesktop.org/poppler/poppler/-/commit/4ce27cc826bf90cc8dbbd8a8c87bd913cccd7ec0"
+      },
+      "appliesTo": [
+        {"target": "ubuntu-focal-amd64", "sourceVersion": "0.86.1-0ubuntu1.7"}
+      ],
+      "dep3": {
+        "origin": "Manual context port of upstream commit 4ce27cc826bf90cc8dbbd8a8c87bd913cccd7ec0; logic matches upstream, indentation differs in Poppler 0.86.1.",
+        "forwarded": "not-needed; upstream fix is merged",
+        "lastUpdate": "2026-10-30"
+      },
+      "tests": [
+        {
+          "id": "CVE-2025-52885-structtree-uaf",
+          "runner": "getpatched/platform:verification/regression.py (pdfinfo -struct under Valgrind Memcheck)",
+          "fixtures": [
+            {
+              "path": "tests/fixtures/bug.pdf",
+              "sha256": "670d369c3cfff9cb417b40260695a715c2d2e3236fafd04464965842559ae545"
+            }
+          ],
+          "baselineExpectation": "The exact installed baseline package exits with Valgrind error code 97 and reports an invalid memory access in StructTreeRoot::parentTreeAdd.",
+          "patchedExpectation": "The exact installed patched package completes pdfinfo -struct with exit status 0 and Valgrind reports ERROR SUMMARY: 0 errors."
+        }
+      ]
+    }
+  ]
+}

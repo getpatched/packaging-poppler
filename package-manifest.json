@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 3,
+  "project": {
+    "name": "GetPatched",
+    "repository": "getpatched/packaging-poppler",
+    "description": "Target-specific Poppler security maintenance recipe."
+  },
+  "package": {
+    "source": "poppler",
+    "description": "PDF rendering, inspection, and document tooling.",
+    "upstreamProject": "Poppler",
+    "upstreamRepository": "https://gitlab.freedesktop.org/poppler/poppler",
+    "copyrightFile": "LICENSES/ubuntu-focal-copyright"
+  },
+  "targets": [
+    { "id": "ubuntu-focal-amd64", "file": "targets/ubuntu/focal-amd64.json" }
+  ],
+  "patchMetadata": "patches/metadata.json",
+  "regressionTests": {
+    "fixturesDirectory": "tests/fixtures",
+    "runner": "getpatched/platform:verification/regression.py"
+  },
+  "licensing": {
+    "publicContributionsSpdx": "MIT",
+    "publicContributionsLicenseFile": "LICENSE",
+    "fileLicenses": [
+      {"path": "patches/CVE-2025-52885-focal.patch", "spdx": "GPL-2.0-only"}
+    ],
+    "earlyBinaryLicenseId": null,
+    "earlyBinaryTermsFile": null,
+    "upstreamCopyrightFile": "LICENSES/source-copyright",
+    "upstreamLicenses": "preserve"
+  }
+}

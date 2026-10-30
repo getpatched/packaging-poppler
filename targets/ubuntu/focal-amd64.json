@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "id": "ubuntu-focal-amd64",
+  "base": {
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "codename": "focal",
+    "sourcePocket": "updates",
+    "architecture": "amd64"
+  },
+  "source": {
+    "format": "3.0 (quilt)",
+    "version": "0.86.1-0ubuntu1.7",
+    "publication": "https://api.launchpad.net/1.0/ubuntu/+archive/primary/+sourcepub/17215597",
+    "publishedAt": "2025-04-29T22:36:29.215347+00:00",
+    "descriptor": {
+      "name": "poppler_0.86.1-0ubuntu1.7.dsc",
+      "url": "https://archive.ubuntu.com/ubuntu/pool/main/p/poppler/poppler_0.86.1-0ubuntu1.7.dsc",
+      "sha256": "a6213dd88bc099c8db1cee76a2f8bd8e5df43394ad00c88867861cec175266bf",
+      "bytes": 3361
+    },
+    "files": [
+      {
+        "name": "poppler_0.86.1.orig.tar.xz",
+        "role": "upstream-source",
+        "url": "https://archive.ubuntu.com/ubuntu/pool/main/p/poppler/poppler_0.86.1.orig.tar.xz",
+        "sha256": "af630a277c8e194c31339c5446241834aed6ed3d4b4dc7080311e51c66257f6c",
+        "bytes": 1593856
+      },
+      {
+        "name": "poppler_0.86.1-0ubuntu1.7.debian.tar.xz",
+        "role": "ubuntu-packaging",
+        "url": "https://archive.ubuntu.com/ubuntu/pool/main/p/poppler/poppler_0.86.1-0ubuntu1.7.debian.tar.xz",
+        "sha256": "db689f59c36be6413ccc37f9f6eee1370dac8589b03a0c936ad539ea37344c80",
+        "bytes": 42488
+      }
+    ],
+    "signatureVerification": {
+      "verified": false,
+      "note": "The signed Ubuntu source index authenticates the descriptor and archive hashes; individual .dsc uploader signatures have not been separately verified."
+    }
+  },
+  "supportedSourceVersions": ["0.86.1-0ubuntu1.7"],
+  "packageVersion": "0.86.1-0ubuntu1.7+getpatched1",
+  "releaseSerial": 1,
+  "changelog": {
+    "distribution": "focal",
+    "urgency": "medium",
+    "maintainer": "GetPatched Maintainers <packages@getpatched.dev>",
+    "date": "Fri, 30 Oct 2026 00:00:00 +0000"
+  },
+  "binaryPackages": [
+    "libpoppler97",
+    "libpoppler-dev",
+    "libpoppler-private-dev",
+    "libpoppler-glib8",
+    "libpoppler-glib-dev",
+    "libpoppler-glib-doc",
+    "gir1.2-poppler-0.18",
+    "libpoppler-qt5-1",
+    "libpoppler-qt5-dev",
+    "libpoppler-cpp0v5",
+    "libpoppler-cpp-dev",
+    "poppler-utils"
+  ],
+  "patches": ["cve-2025-52885-focal"],
+  "releaseAccess": {
+    "policy": "public-after-checks",
+    "sponsorDelayHours": 0,
+    "sponsorEligibility": null,
+    "earlyBinaryLicenseId": null,
+    "publicContributionSpdx": "MIT",
+    "earlyUse": ["private", "commercial"],
+    "earlyRedistributionAllowed": false,
+    "publicLicenseScope": "getpatched-authored-contributions-only"
+  },
+  "status": "unreleased-development-candidate"
+}
