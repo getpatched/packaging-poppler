@@ -28,6 +28,8 @@ The platform's installed-package regression runner uses Valgrind Memcheck, not A
 
 The target lists all binary packages produced by the Ubuntu source package so ABI-coupled libraries and their consumers remain version-aligned. No package binaries are published by this recipe.
 
+`binaryPackages` lists every output binary required in the candidate release. `advisoryPackages` lists the binaries that contain or ship the vulnerable Poppler code and therefore belong in CVE records and package-aware scan expectations. The documentation-only `libpoppler-glib-doc` binary remains in the build and release set but is excluded from the CVE affected-package list.
+
 ## Licensing
 
 The MIT license in `LICENSE` applies only to original GetPatched-authored recipe metadata, tests, and documentation. The security patch is a context-adjusted port of Poppler code and is identified as `GPL-2.0-only` in `package-manifest.json` and `patches/metadata.json`; it is not relicensed under MIT. The PoC retains its upstream MIT license. Poppler and Ubuntu copyright/license notices are preserved in `LICENSES/`; preserve upstream and distribution obligations in every source and binary package.
