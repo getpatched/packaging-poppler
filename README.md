@@ -1,14 +1,14 @@
 # GetPatched Poppler recipe
 
-This public recipe pins freely available Ubuntu and Debian Poppler sources and carries target-specific security backports. It covers a malformed structure-tree use-after-free on Ubuntu Focal (CVE-2025-52885) and a revision 6 password-length overflow on Debian Bookworm and Trixie (CVE-2026-107705). Each source version and architecture is an independent build target; the Debian targets remain unverified development candidates until their installed-package regression and scan runs pass.
+This public recipe pins freely available Ubuntu and Debian Poppler sources and carries target-specific security backports. It covers a malformed structure-tree use-after-free on Ubuntu Focal (CVE-2025-52885) and a revision 6 password-length overflow on Debian Bookworm and Trixie (CVE-2026-107705). Each source version and architecture is an independent build target. The three targets listed here have passed their hosted development verification; no production package release has been published.
 
 ## Target
 
 | Target | Distro source | Candidate version | CVE | Status |
 |---|---|---|---|---|
-| Ubuntu Focal amd64 | `0.86.1-0ubuntu1.7` | `0.86.1-0ubuntu1.7+getpatched1` | CVE-2025-52885 | Development candidate; distro package checks pending |
-| Debian Bookworm amd64 | `22.12.0-2+deb12u3` | `22.12.0-2+deb12u3+getpatched1` | CVE-2026-107705 | Unverified development candidate |
-| Debian Trixie amd64 | `25.03.0-5+deb13u4` | `25.03.0-5+deb13u4+getpatched1` | CVE-2026-107705 | Unverified development candidate |
+| Ubuntu Focal amd64 | `0.86.1-0ubuntu1.7` | `0.86.1-0ubuntu1.7+getpatched1` | CVE-2025-52885 | Development-verified; production release pending |
+| Debian Bookworm amd64 | `22.12.0-2+deb12u3` | `22.12.0-2+deb12u3+getpatched1` | CVE-2026-107705 | Development-verified; production release pending |
+| Debian Trixie amd64 | `25.03.0-5+deb13u4` | `25.03.0-5+deb13u4+getpatched1` | CVE-2026-107705 | Development-verified; production release pending |
 
 For CVE-2025-52885, Debian Bullseye, Bookworm, and Trixie are excluded because their public packages are fixed; applicability is evaluated separately for each CVE. Ubuntu's Focal ESM source is not used. The Focal source descriptor and both archives are pinned by SHA-256 in `targets/ubuntu/focal-amd64.json`; hashes were checked against the signed Ubuntu source index. The uploader signature on the `.dsc` has not been separately verified.
 
@@ -36,7 +36,7 @@ The Debian Security Tracker currently marks Bookworm `22.12.0-2+deb12u3` and Tri
 
 The upstream fix is commit [`60e19a30152560fcccfb2ae7f7559eda560c0160`](https://gitlab.freedesktop.org/poppler/poppler/-/commit/60e19a30152560fcccfb2ae7f7559eda560c0160). Its patch does not apply verbatim to the Bookworm and Trixie source revisions because it includes a later `GooString` to `std::string` refactor. The target-scoped backport instead clamps `revision6Hash()`'s existing `GooString` length to 127 bytes. This matches the limit already used by `makeFileKey()` and bounds both fixed-size buffers. It applies only to the exact source versions listed above.
 
-The regression probe uses Poppler's exported `PDFDoc` API to open a small encrypted revision 6 PDF with a 180-byte owner password. The fixture is pinned from qpdf's public qtest corpus at commit `4eba95899886e851cc41d76886483b347612f2a8`; its source and Artistic-2.0 license are recorded under `tests/fixtures/` and `LICENSES/`. The hosted baseline run must show the specific long-password overflow in `libpoppler` under Valgrind, either as an attributed invalid write or the observed stack-canary abort; the patched installed-package run must complete with zero Memcheck errors. Both checks and the package-aware before/after scan are pending. Until those results exist, these Debian rows are candidates, not verified fixes or release claims.
+The regression probe uses Poppler's exported `PDFDoc` API to open a small encrypted revision 6 PDF with a 180-byte owner password. The fixture is pinned from qpdf's public qtest corpus at commit `4eba95899886e851cc41d76886483b347612f2a8`; its source and Artistic-2.0 license are recorded under `tests/fixtures/` and `LICENSES/`. Hosted Debian Bookworm run [41518910177](https://github.com/getpatched/platform/actions/runs/41518910177) and Trixie run [41531130479](https://github.com/getpatched/platform/actions/runs/41531130479) each reproduced the long-password overflow on the exact installed baseline and passed the same regression on the installed candidate with zero Memcheck errors. The candidate-specific GetPatched scanner changed from one finding to zero after it reran the paired installed regression. Raw Trivy 0.70.0 still reports CVE-2026-107705 in 14 Poppler package records in both baseline and candidate images; these targets are not Trivy-clean. The hosted runs also passed consumer and isolated signed APT-client checks. Their build provenance says binaries remained in disposable containers; no production package or signed production index was published.
 
 `binaryPackages` lists every output binary required in the candidate release. `advisoryPackages` lists the binaries that contain or ship the vulnerable Poppler code and therefore belong in CVE records and package-aware scan expectations. The documentation-only `libpoppler-glib-doc` binary remains in the build and release set but is excluded from the CVE affected-package list.
 
