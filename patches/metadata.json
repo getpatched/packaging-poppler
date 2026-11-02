@@ -53,7 +53,7 @@
         "url": "https://gitlab.freedesktop.org/poppler/poppler/-/commit/60e19a30152560fcccfb2ae7f7559eda560c0160"
       },
       "appliesTo": [
-        {"target": "debian-bookworm-amd64", "sourceVersion": "22.12.0-2+deb12u2"},
+        {"target": "debian-bookworm-amd64", "sourceVersion": "22.12.0-2+deb12u3"},
         {"target": "debian-trixie-amd64", "sourceVersion": "25.03.0-5+deb13u4"}
       ],
       "dep3": {
@@ -75,7 +75,7 @@
               "sha256": "b616425b595e376dbbfc19dbb89a66678afd4eb74f85575f667778afa1add892"
             }
           ],
-          "baselineExpectation": "The exact installed Debian baseline exits with Valgrind error code 97 and reports an invalid write in libpoppler while PDFDoc opens an encrypted revision 6 PDF with a 180-byte owner password.",
+          "baselineExpectation": "The exact installed Debian baseline reproduces the long-password overflow while PDFDoc opens the encrypted revision 6 fixture with a 180-byte owner password: Valgrind must identify an invalid write in revision6Hash/Decrypt.cc, or report the constrained stack-canary abort (__stack_chk_fail, SIGABRT, and the exact stack-smashing stderr) inside libpoppler. Generic writes or aborts do not qualify.",
           "patchedExpectation": "The exact installed patched Debian package completes the same probe with exit status 0 and Valgrind reports ERROR SUMMARY: 0 errors."
         }
       ]
