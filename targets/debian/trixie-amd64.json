@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 2,
+  "id": "debian-trixie-amd64",
+  "base": {
+    "distribution": "Debian",
+    "release": "13",
+    "codename": "trixie",
+    "sourcePocket": "release",
+    "architecture": "amd64"
+  },
+  "source": {
+    "format": "3.0 (quilt)",
+    "version": "25.03.0-5+deb13u4",
+    "publication": "https://snapshot.debian.org/archive/debian/20261030T000000Z/",
+    "publishedAt": "2026-07-02T16:52:33+02:00",
+    "descriptor": {
+      "name": "poppler_25.03.0-5+deb13u4.dsc",
+      "url": "https://snapshot.debian.org/archive/debian/20261030T000000Z/pool/main/p/poppler/poppler_25.03.0-5+deb13u4.dsc",
+      "sha256": "b895e1e28568a486523f93dd5a8707ecb16767c5f134a6e23510b0597114c628",
+      "bytes": 3966
+    },
+    "files": [
+      {
+        "name": "poppler_25.03.0.orig.tar.xz",
+        "role": "upstream-source",
+        "url": "https://snapshot.debian.org/archive/debian/20261030T000000Z/pool/main/p/poppler/poppler_25.03.0.orig.tar.xz",
+        "sha256": "97da4ff88517a6bbd729529f195f85c8d7a0c3bb4a3d57cb0c685cbb052fe837",
+        "bytes": 1954516
+      },
+      {
+        "name": "poppler_25.03.0-5+deb13u4.debian.tar.xz",
+        "role": "debian-packaging",
+        "url": "https://snapshot.debian.org/archive/debian/20261030T000000Z/pool/main/p/poppler/poppler_25.03.0-5+deb13u4.debian.tar.xz",
+        "sha256": "2605b5d7e6ce17a307d067048386deedfc41fdac6f75f81ad76050f517fc0de4",
+        "bytes": 44732
+      }
+    ],
+    "signatureVerification": {
+      "verified": false,
+      "note": "The signed Debian Trixie Sources index and its source file hashes were verified against the official Debian archive keyring; the .dsc uploader signature was not separately verified."
+    }
+  },
+  "supportedSourceVersions": ["25.03.0-5+deb13u4"],
+  "packageVersion": "25.03.0-5+deb13u4+getpatched1",
+  "releaseSerial": 1,
+  "changelog": {
+    "distribution": "trixie",
+    "urgency": "medium",
+    "maintainer": "GetPatched Maintainers <packages@getpatched.dev>",
+    "date": "Mon, 02 Nov 2026 00:00:00 +0000"
+  },
+  "binaryPackages": [
+    "libpoppler147", "libpoppler-dev", "libpoppler-private-dev", "libpoppler-glib8t64",
+    "libpoppler-glib-dev", "libpoppler-glib-doc", "gir1.2-poppler-0.18",
+    "libpoppler-qt5-1t64", "libpoppler-qt5-dev", "libpoppler-qt6-3t64", "libpoppler-qt6-dev",
+    "libpoppler-cpp2", "libpoppler-cpp-dev", "poppler-utils"
+  ],
+  "advisoryPackages": ["libpoppler147"],
+  "builderPackages": ["libpoppler-dev", "libpoppler-private-dev"],
+  "patches": ["cve-2026-107705-debian"],
+  "releaseAccess": {
+    "policy": "public-after-checks",
+    "sponsorDelayHours": 0,
+    "sponsorEligibility": null,
+    "earlyBinaryLicenseId": null,
+    "publicContributionSpdx": "MIT",
+    "earlyUse": ["private", "commercial"],
+    "earlyRedistributionAllowed": false,
+    "publicLicenseScope": "getpatched-authored-contributions-only"
+  },
+  "status": "unreleased-development-candidate"
+}
