@@ -10,10 +10,12 @@
     "description": "PDF rendering, inspection, and document tooling.",
     "upstreamProject": "Poppler",
     "upstreamRepository": "https://gitlab.freedesktop.org/poppler/poppler",
-    "copyrightFile": "LICENSES/ubuntu-focal-copyright"
+    "copyrightFile": "LICENSES/source-copyright"
   },
   "targets": [
-    { "id": "ubuntu-focal-amd64", "file": "targets/ubuntu/focal-amd64.json" }
+    { "id": "ubuntu-focal-amd64", "file": "targets/ubuntu/focal-amd64.json" },
+    { "id": "debian-bookworm-amd64", "file": "targets/debian/bookworm-amd64.json" },
+    { "id": "debian-trixie-amd64", "file": "targets/debian/trixie-amd64.json" }
   ],
   "patchMetadata": "patches/metadata.json",
   "regressionTests": {
@@ -24,7 +26,9 @@
     "publicContributionsSpdx": "MIT",
     "publicContributionsLicenseFile": "LICENSE",
     "fileLicenses": [
-      {"path": "patches/CVE-2025-52885-focal.patch", "spdx": "GPL-2.0-only"}
+      {"path": "patches/CVE-2025-52885-focal.patch", "spdx": "GPL-2.0-only"},
+      {"path": "patches/CVE-2026-107705-debian.patch", "spdx": "GPL-2.0-only"},
+      {"path": "tests/fixtures/CVE-2026-107705-r6-encrypted.pdf", "spdx": "Artistic-2.0", "licenseFile": "LICENSES/QPDF-ARTISTIC-2.0"}
     ],
     "earlyBinaryLicenseId": null,
     "earlyBinaryTermsFile": null,

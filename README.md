@@ -1,14 +1,16 @@
 # GetPatched Poppler recipe
 
-This public recipe pins Ubuntu 20.04 Focal's freely available Poppler source and carries a target-specific backport for CVE-2025-52885. The affected path is reached by `pdfinfo -struct` while parsing a malformed PDF structure tree. The issue is a local user-triggered use-after-free; this repository makes no claim of remote exploitation.
+This public recipe pins freely available Ubuntu and Debian Poppler sources and carries target-specific security backports. It covers a malformed structure-tree use-after-free on Ubuntu Focal (CVE-2025-52885) and a revision 6 password-length overflow on Debian Bookworm and Trixie (CVE-2026-107705). Each source version and architecture is an independent build target. The three targets listed here have passed their hosted development verification; no production package release has been published.
 
 ## Target
 
 | Target | Distro source | Candidate version | CVE | Status |
 |---|---|---|---|---|
-| Ubuntu Focal amd64 | `0.86.1-0ubuntu1.7` | `0.86.1-0ubuntu1.7+getpatched1` | CVE-2025-52885 | Development candidate; distro package checks pending |
+| Ubuntu Focal amd64 | `0.86.1-0ubuntu1.7` | `0.86.1-0ubuntu1.7+getpatched1` | CVE-2025-52885 | Development-verified; production release pending |
+| Debian Bookworm amd64 | `22.12.0-2+deb12u3` | `22.12.0-2+deb12u3+getpatched1` | CVE-2026-107705 | Development-verified; production release pending |
+| Debian Trixie amd64 | `25.03.0-5+deb13u4` | `25.03.0-5+deb13u4+getpatched1` | CVE-2026-107705 | Development-verified; production release pending |
 
-Debian Bullseye, Bookworm, and Trixie are excluded because their public packages are fixed. Ubuntu's Focal ESM source is not used. The Focal source descriptor and both archives are pinned by SHA-256 in `targets/ubuntu/focal-amd64.json`; hashes were checked against the signed Ubuntu source index. The uploader signature on the `.dsc` has not been separately verified.
+For CVE-2025-52885, Debian Bullseye, Bookworm, and Trixie are excluded because their public packages are fixed; applicability is evaluated separately for each CVE. Ubuntu's Focal ESM source is not used. The Focal source descriptor and both archives are pinned by SHA-256 in `targets/ubuntu/focal-amd64.json`; hashes were checked against the signed Ubuntu source index. The uploader signature on the `.dsc` has not been separately verified.
 
 ## Backport
 
@@ -28,8 +30,16 @@ The platform's installed-package regression runner uses Valgrind Memcheck, not A
 
 The target lists all binary packages produced by the Ubuntu source package so ABI-coupled libraries and their consumers remain version-aligned. No package binaries are published by this recipe.
 
+## Debian backport: CVE-2026-107705
+
+The Debian Security Tracker currently marks Bookworm `22.12.0-2+deb12u3` and Trixie `25.03.0-5+deb13u4` vulnerable. Bookworm's exact `Sources` entry was read from the Debian Security Snapshot `20261030T000000Z` index, whose `InRelease` signature and `Sources.xz` hash chain were verified with the official Debian archive keyring; the target JSON pins each source asset by SHA-256 and size. Debian Snapshot metadata records the u3 descriptor first seen at `2026-07-31T19:43:22Z`. Trixie's entry is pinned from the Debian Snapshot release index. Ubuntu Focal is not included for this CVE because Canonical lists it as needing evaluation; this recipe does not infer applicability from the upstream affected-version range.
+
+The upstream fix is commit [`60e19a30152560fcccfb2ae7f7559eda560c0160`](https://gitlab.freedesktop.org/poppler/poppler/-/commit/60e19a30152560fcccfb2ae7f7559eda560c0160). Its patch does not apply verbatim to the Bookworm and Trixie source revisions because it includes a later `GooString` to `std::string` refactor. The target-scoped backport instead clamps `revision6Hash()`'s existing `GooString` length to 127 bytes. This matches the limit already used by `makeFileKey()` and bounds both fixed-size buffers. It applies only to the exact source versions listed above.
+
+The regression probe uses Poppler's exported `PDFDoc` API to open a small encrypted revision 6 PDF with a 180-byte owner password. The fixture is pinned from qpdf's public qtest corpus at commit `4eba95899886e851cc41d76886483b347612f2a8`; its source and Artistic-2.0 license are recorded under `tests/fixtures/` and `LICENSES/`. Hosted Debian Bookworm run [41518910177](https://github.com/getpatched/platform/actions/runs/41518910177) and Trixie run [41531130479](https://github.com/getpatched/platform/actions/runs/41531130479) each reproduced the long-password overflow on the exact installed baseline and passed the same regression on the installed candidate with zero Memcheck errors. The candidate-specific GetPatched scanner changed from one finding to zero after it reran the paired installed regression. Raw Trivy 0.70.0 still reports CVE-2026-107705 in 14 Poppler package records in both baseline and candidate images; these targets are not Trivy-clean. The hosted runs also passed consumer and isolated signed APT-client checks. Their build provenance says binaries remained in disposable containers; no production package or signed production index was published.
+
 `binaryPackages` lists every output binary required in the candidate release. `advisoryPackages` lists the binaries that contain or ship the vulnerable Poppler code and therefore belong in CVE records and package-aware scan expectations. The documentation-only `libpoppler-glib-doc` binary remains in the build and release set but is excluded from the CVE affected-package list.
 
 ## Licensing
 
-The MIT license in `LICENSE` applies only to original GetPatched-authored recipe metadata, tests, and documentation. The security patch is a context-adjusted port of Poppler code and is identified as `GPL-2.0-only` in `package-manifest.json` and `patches/metadata.json`; it is not relicensed under MIT. The PoC retains its upstream MIT license. Poppler and Ubuntu copyright/license notices are preserved in `LICENSES/`; preserve upstream and distribution obligations in every source and binary package.
+The MIT license in `LICENSE` applies only to original GetPatched-authored recipe metadata, tests, and documentation. The security patch is a context-adjusted port of Poppler code and is identified as `GPL-2.0-only` in `package-manifest.json` and `patches/metadata.json`; it is not relicensed under MIT. The CVE-2025-52885 PoC retains its upstream MIT license; the qpdf R6 fixture retains its Artistic-2.0 license. Poppler, qpdf, and Ubuntu copyright/license notices are preserved in `LICENSES/`; preserve upstream and distribution obligations in every source and binary package.

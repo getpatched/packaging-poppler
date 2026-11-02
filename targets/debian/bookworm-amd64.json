@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 2,
+  "id": "debian-bookworm-amd64",
+  "base": {
+    "distribution": "Debian",
+    "release": "12",
+    "codename": "bookworm",
+    "sourcePocket": "security",
+    "architecture": "amd64"
+  },
+  "source": {
+    "format": "3.0 (quilt)",
+    "version": "22.12.0-2+deb12u3",
+    "publication": "https://snapshot.debian.org/archive/debian-security/20261030T000000Z/",
+    "publishedAt": "2026-07-31T19:43:22Z",
+    "descriptor": {
+      "name": "poppler_22.12.0-2+deb12u3.dsc",
+      "url": "https://snapshot.debian.org/archive/debian-security/20261030T000000Z/pool/updates/main/p/poppler/poppler_22.12.0-2+deb12u3.dsc",
+      "sha256": "528b0d841a807314275f4031a51ab38810d22b7adeb73cdd1b1d8e3e059b3152",
+      "bytes": 3486
+    },
+    "files": [
+      {
+        "name": "poppler_22.12.0.orig.tar.xz",
+        "role": "upstream-source",
+        "url": "https://snapshot.debian.org/archive/debian-security/20261030T000000Z/pool/updates/main/p/poppler/poppler_22.12.0.orig.tar.xz",
+        "sha256": "d9aa9cacdfbd0f8e98fc2b3bb008e645597ed480685757c3e7bc74b4278d15c0",
+        "bytes": 1845856
+      },
+      {
+        "name": "poppler_22.12.0-2+deb12u3.debian.tar.xz",
+        "role": "debian-packaging",
+        "url": "https://snapshot.debian.org/archive/debian-security/20261030T000000Z/pool/updates/main/p/poppler/poppler_22.12.0-2+deb12u3.debian.tar.xz",
+        "sha256": "2028e5351ad7c0e4c1166776468d810dd5bcb981dbcdc91189277cfcfec614a2",
+        "bytes": 43580
+      }
+    ],
+    "signatureVerification": {
+      "verified": false,
+      "note": "The signed Debian Bookworm Security Sources index and its source file hashes were verified with the official Debian archive keyring. Debian Snapshot first-seen metadata identifies 2026-07-31T19:43:22Z as the descriptor upload time; the .dsc uploader signature was not separately verified."
+    }
+  },
+  "supportedSourceVersions": ["22.12.0-2+deb12u3"],
+  "packageVersion": "22.12.0-2+deb12u3+getpatched1",
+  "releaseSerial": 1,
+  "changelog": {
+    "distribution": "bookworm",
+    "urgency": "medium",
+    "maintainer": "GetPatched Maintainers <packages@getpatched.dev>",
+    "date": "Mon, 02 Nov 2026 00:00:00 +0000"
+  },
+  "binaryPackages": [
+    "libpoppler126", "libpoppler-dev", "libpoppler-private-dev", "libpoppler-glib8",
+    "libpoppler-glib-dev", "libpoppler-glib-doc", "gir1.2-poppler-0.18",
+    "libpoppler-qt5-1", "libpoppler-qt5-dev", "libpoppler-qt6-3", "libpoppler-qt6-dev",
+    "libpoppler-cpp0v5", "libpoppler-cpp-dev", "poppler-utils"
+  ],
+  "advisoryPackages": ["libpoppler126"],
+  "builderPackages": ["libpoppler-dev", "libpoppler-private-dev"],
+  "patches": ["cve-2026-107705-debian"],
+  "releaseAccess": {
+    "policy": "public-after-checks",
+    "sponsorDelayHours": 0,
+    "sponsorEligibility": null,
+    "earlyBinaryLicenseId": null,
+    "publicContributionSpdx": "MIT",
+    "earlyUse": ["private", "commercial"],
+    "earlyRedistributionAllowed": false,
+    "publicLicenseScope": "getpatched-authored-contributions-only"
+  },
+  "status": "unreleased-development-candidate"
+}
