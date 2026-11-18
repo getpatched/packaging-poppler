@@ -43,3 +43,5 @@ The regression probe uses Poppler's exported `PDFDoc` API to open a small encryp
 ## Licensing
 
 The MIT license in `LICENSE` applies only to original GetPatched-authored recipe metadata, tests, and documentation. The security patch is a context-adjusted port of Poppler code and is identified as `GPL-2.0-only` in `package-manifest.json` and `patches/metadata.json`; it is not relicensed under MIT. The CVE-2025-52885 PoC retains its upstream MIT license; the qpdf R6 fixture retains its Artistic-2.0 license. Poppler, qpdf, and Ubuntu copyright/license notices are preserved in `LICENSES/`; preserve upstream and distribution obligations in every source and binary package.
+
+[![advertisement](https://ads.servead.net/i/1ddd6386-c49b-4005-b79d-8cd15dc865e8.svg)](https://ads.servead.net/c/1ddd6386-c49b-4005-b79d-8cd15dc865e8)
