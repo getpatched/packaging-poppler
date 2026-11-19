@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "suites": [
+    {
+      "name": "Build bundled Poppler Qt5 unit tests",
+      "command": [
+        "cmake",
+        "--build",
+        "obj-x86_64-linux-gnu",
+        "--target",
+        "check_qt5_dateConversion",
+        "check_qt5_goostring",
+        "check_qt5_object",
+        "check_qt5_utf_conversion"
+      ],
+      "timeoutSeconds": 600
+    },
+    {
+      "name": "check_qt5_dateConversion",
+      "command": [
+        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_dateConversion"
+      ],
+      "timeoutSeconds": 600
+    },
+    {
+      "name": "check_qt5_goostring",
+      "command": [
+        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_goostring"
+      ],
+      "timeoutSeconds": 600
+    },
+    {
+      "name": "check_qt5_object",
+      "command": [
+        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_object"
+      ],
+      "timeoutSeconds": 600
+    },
+    {
+      "name": "check_qt5_utf_conversion",
+      "command": [
+        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_utf_conversion"
+      ],
+      "timeoutSeconds": 600
+    }
+  ]
+}
