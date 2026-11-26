@@ -2,46 +2,18 @@
   "schemaVersion": 1,
   "suites": [
     {
-      "name": "Build bundled Poppler Qt5 unit tests",
+      "name": "Poppler registered upstream suites with pinned corpus",
       "command": [
-        "cmake",
-        "--build",
-        "obj-x86_64-linux-gnu",
-        "--target",
-        "check_qt5_dateConversion",
-        "check_qt5_goostring",
-        "check_qt5_object",
-        "check_qt5_utf_conversion"
+        "bash",
+        "-euo",
+        "pipefail",
+        "-c",
+        "mkdir -p /build/poppler-test-data\ntar -xzf /test-assets/test-0ef006dca68d2206387eca1d36ae06733812e387.tar.gz --strip-components=1 -C /build/poppler-test-data\ntest -f /build/poppler-test-data/test-poppler.c\ncmake -S . -B obj-x86_64-linux-gnu -DTESTDATADIR=/build/poppler-test-data -DBUILD_GTK_TESTS=ON -DBUILD_QT5_TESTS=ON -DBUILD_CPP_TESTS=ON\ncmake --build obj-x86_64-linux-gnu --parallel 2\ncd obj-x86_64-linux-gnu\nctest -N | tee /build/poppler-discovered-tests.log\ngrep -Eq 'Total Tests: [1-9][0-9]*' /build/poppler-discovered-tests.log\ngrep -q 'check_qt5_' /build/poppler-discovered-tests.log\ngrep -q 'poppler-check-' /build/poppler-discovered-tests.log\ngrep -q 'check_qt6_' /build/poppler-discovered-tests.log\nstatus=0\nctest -V --output-on-failure --timeout 120 | tee /build/poppler-executed-tests.log || status=$?\nif (( status != 0 )); then\n  gpg --version || true\n  GPGME_DEBUG=9:/build/poppler-gpgme.log ctest -V --output-on-failure --timeout 120 -R '^check_qt6_signature_basics$' || true\n  if [[ -f /build/poppler-gpgme.log ]]; then\n    echo 'OpenPGP diagnostic log (last 1 MiB)'\n    tail -c 1048576 /build/poppler-gpgme.log\n  fi\n  exit \"$status\"\nfi\nif grep -Eq 'Totals:.*[1-9][0-9]* skipped|[0-9]+ - .*\\(Not Run\\)' /build/poppler-executed-tests.log; then\n  echo 'Unexpected skipped upstream tests' >&2\n  exit 1\nfi\n"
       ],
-      "timeoutSeconds": 600
-    },
-    {
-      "name": "check_qt5_dateConversion",
-      "command": [
-        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_dateConversion"
-      ],
-      "timeoutSeconds": 600
-    },
-    {
-      "name": "check_qt5_goostring",
-      "command": [
-        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_goostring"
-      ],
-      "timeoutSeconds": 600
-    },
-    {
-      "name": "check_qt5_object",
-      "command": [
-        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_object"
-      ],
-      "timeoutSeconds": 600
-    },
-    {
-      "name": "check_qt5_utf_conversion",
-      "command": [
-        "obj-x86_64-linux-gnu/qt5/tests/check_qt5_utf_conversion"
-      ],
-      "timeoutSeconds": 600
+      "env": {
+        "QT_QPA_PLATFORM": "offscreen"
+      },
+      "timeoutSeconds": 1800
     }
   ]
 }

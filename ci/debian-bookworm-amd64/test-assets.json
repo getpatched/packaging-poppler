@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "name": "test-0ef006dca68d2206387eca1d36ae06733812e387.tar.gz",
+      "url": "https://gitlab.freedesktop.org/poppler/test/-/archive/0ef006dca68d2206387eca1d36ae06733812e387/test-0ef006dca68d2206387eca1d36ae06733812e387.tar.gz",
+      "bytes": 5984056,
+      "sha256": "2e355a9de298e5ced4245258193c126e16ea5cfb0c937aeb276754e9fff249ac"
+    }
+  ]
+}
